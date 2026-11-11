@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create, calculate, and print professional invoices.">
+  <title>Invoice Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header no-print">
+      <a class="brand" href="#" aria-label="Invoice Studio home">
+        <span class="brand-mark" aria-hidden="true">I</span>
+        <span>Invoice Studio</span>
+      </a>
+      <span class="header-note">Simple invoicing, clearly done.</span>
+    </header>
+
+    <section class="page-heading no-print">
+      <div>
+        <p class="eyebrow">WORKSPACE</p>
+        <h1>Create an invoice</h1>
+        <p class="muted">Add your details and items. Your totals update automatically.</p>
+      </div>
+      <button class="button button-primary" id="printButton" type="button">
+        <span aria-hidden="true">↗</span> Print invoice
+      </button>
+    </section>
+
+    <section class="invoice-card" id="invoice">
+      <div class="invoice-top">
+        <div>
+          <p class="eyebrow">INVOICE</p>
+          <h2 class="invoice-title">Invoice summary</h2>
+        </div>
+        <div class="invoice-stamp">INVOICE</div>
+      </div>
+
+      <section class="metadata-grid" aria-label="Invoice details">
+        <div class="field">
+          <label for="customerName">Customer name</label>
+          <input id="customerName" name="customerName" type="text" placeholder="e.g. Alex Morgan" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="invoiceDate">Invoice date</label>
+          <input id="invoiceDate" name="invoiceDate" type="date">
+        </div>
+        <div class="field">
+          <label for="invoiceNumber">Invoice number</label>
+          <input id="invoiceNumber" name="invoiceNumber" type="text" placeholder="e.g. INV-1001">
+        </div>
+      </section>
+
+      <section class="items-section" aria-labelledby="itemsHeading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">BREAKDOWN</p>
+            <h3 id="itemsHeading">Items</h3>
+          </div>
+          <span class="item-count" id="itemCount">0 items</span>
+        </div>
+
+        <form id="itemForm" class="add-item-form no-print">
+          <div class="field item-name-field">
+            <label for="itemName">Item name</label>
+            <input id="itemName" name="itemName" type="text" placeholder="What are you charging for?" required maxlength="100">
+          </div>
+          <div class="field">
+            <label for="itemQuantity">Quantity</label>
+            <input id="itemQuantity" name="itemQuantity" type="number" min="1" step="1" value="1" required>
+          </div>
+          <div class="field">
+            <label for="itemPrice">Unit price (₹)</label>
+            <input id="itemPrice" name="itemPrice" type="number" min="0" step="0.01" placeholder="0.00" required>
+          </div>
+          <button class="button button-add" type="submit">+ Add item</button>
+        </form>
+
+        <div class="table-wrap">
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col" class="number-cell">Qty</th>
+                <th scope="col" class="number-cell">Unit price</th>
+                <th scope="col" class="number-cell">Line total</th>
+                <th scope="col" class="action-cell no-print"><span class="visually-hidden">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="itemsBody">
+              <!-- Invoice rows are rendered from the JavaScript items array. -->
+            </tbody>
+          </table>
+        </div>
+        <p class="empty-state" id="emptyState">No items yet. Add your first item above.</p>
+      </section>
+
+      <section class="totals-area" aria-label="Invoice totals">
+        <div class="totals-card">
+          <div class="total-row">
+            <span>Subtotal</span>
+            <strong id="subtotal">₹0.00</strong>
+          </div>
+          <div class="total-row">
+            <span>Tax <span class="tax-note">(18%)</span></span>
+            <strong id="tax">₹0.00</strong>
+          </div>
+          <div class="total-row grand-total">
+            <span>Grand total</span>
+            <strong id="grandTotal">₹0.00</strong>
+          </div>
+        </div>
+      </section>
+
+      <footer class="invoice-footer">
+        <p>Thank you for your business.</p>
+        <span>Generated with Invoice Studio</span>
+      </footer>
+    </section>
+
+    <p class="page-footnote no-print">Your invoice is calculated locally in your browser. Nothing is uploaded.</p>
+    <div class="status-message no-print" id="statusMessage" role="status" aria-live="polite"></div>
+  </main>
+</body>
+</html>
